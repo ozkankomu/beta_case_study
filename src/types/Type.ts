@@ -21,3 +21,10 @@ export interface IPropProductCard {
 export interface IPropSearchBar {
   setAllProducts:React.Dispatch<React.SetStateAction<IProducts[]>>  
 } 
+
+export interface IProductionCardType {
+  name:string;
+  price:number;
+  productId:string;
+  quantity:number
+}

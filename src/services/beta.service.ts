@@ -17,7 +17,7 @@ const addToCartById = async (id:number) =>{
     return data;
 }
 const getCart = async () =>{
-    const data = await betaApi.get('/view-cart');
+    const {data} = await betaApi.get('/view-cart');
     return data;
 }
 const subtractFromCartById = async (id:number) =>{
