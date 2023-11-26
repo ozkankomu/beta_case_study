@@ -41,7 +41,7 @@ const ProductCard = ({ product }: IPropProductCard) => {
       : "./strawberry.jpg";
 
       // I made requests to the API for increasing and decreasing transactions on product cards and kept the responses in the redux store.
-  const handleIncrease = async () => {
+  const addProduct = async () => {
     try {
       await betaService.addToCartById(Number(product.id));
       const data = await betaService.getCart();
@@ -52,7 +52,7 @@ const ProductCard = ({ product }: IPropProductCard) => {
   };
 
   // I made requests to the API for increasing and decreasing transactions on product cards and kept the responses in the redux store.
-  const handleSubtraction = async () => {
+  const removeProduct = async () => {
     try {
       await betaService.subtractFromCartById(Number(product.id));
       const data = await betaService.getCart();
@@ -121,7 +121,7 @@ const ProductCard = ({ product }: IPropProductCard) => {
             </Typography>
           </Stack>
           <Button
-            onClick={() => handleIncrease()}
+            onClick={() => addProduct()}
             color="error"
             disabled={counter > 0 ? true : false}
             sx={{ mt: "5px" }}
@@ -141,7 +141,7 @@ const ProductCard = ({ product }: IPropProductCard) => {
                   border: "1px solid #C24B5A",
                   borderRadius: 1,
                 }}
-                onClick={() => handleSubtraction()}
+                onClick={() => removeProduct()}
               >
                 <RemoveIcon sx={{ color: "#C24B5A" }} />
               </IconButton>
@@ -158,7 +158,7 @@ const ProductCard = ({ product }: IPropProductCard) => {
                 border: "1px solid #C24B5A",
                 borderRadius: 1,
               }}
-              onClick={() => handleIncrease()}
+              onClick={() => addProduct()}
             >
               <AddIcon sx={{ color: "#C24B5A" }} />
             </IconButton>
