@@ -1,46 +1,116 @@
-# Getting Started with Create React App
+<p align="center">
+<a href="https://www.linkedin.com/in/ozkankomu/" target="_blank"><img src="photo1.png" alt="screenshot" width='500px' target=_blanked></a>
+</p>
+●	Beta Case Study
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Table of contents
 
-## Available Scripts
+  - [The challenge](#the-challenge)
+  - [Screenshot](#screenshot)
+  - [Project Skeleton ](#project-skeleton)
+  - [Links](#links)
+  - [Built with](#built-with)
+  - [Installation](#Installation)  
+  - [Author](#author)
 
-In the project directory, you can run:
+## The challenge
 
-### `yarn start`
+Hello. I used ReactJs, TypeScript, Redux Toolkit, Redux Persist, Mui, axios technologies in the project.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+In its current state, there was no need to use the React Router Dom library in the project, but I added this library so that the project would not lack the structure that a large project should have. I entered the project with the navigation component.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+First of all, when the user logs into the project, the Session-Id is checked in the navigation component and if there is no session-Id, the session-Id is first taken and saved to the redux store. I cached the states with redux-persist to prevent the session id from being deleted when logging in or refreshing the page. In the same component, cart information is pulled from the API, saved to the redux store and cached.
 
-### `yarn test`
+When the user adds products from the product cards or increases or decreases the quantity of the product, the basket information is updated and information such as product name, quantity and prices can be seen in the basket. And this information is cached with redux persist.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The user's session id is checked before each request using the axios interceptor and added to the request.
 
-### `yarn build`
+By creating axios instance and axios interceptor in the service helpers folder for API requests, the service folder was kept more organized and understandable.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Project Skeleton
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+●	Beta Case Study
+|
+|----readme.md       
+SOLUTION
+├── public
+│     └── index.html
+├── src
+│    ├── components
+│    │       ├── CardList.tsx
+│    │       ├── Modal.tsx
+│    │       ├── Navbar.tsx
+│    │       ├── ProductCard.tsx
+│    ├── Services
+│    │       ├── Service.Helpers.ts
+│    │       ├── Beta.Service.ts│    
+│    │      
+│    ├── Store
+│    │       ├── Cart Slice
+│    │       ├── Session Slice   
+│    │       
+│    ├── Types
+│    │       ├── Type.ts
+│    │       
+│    ├── Views
+│    │       ├── HomeView.tsx
+│    │   
+│    ├── Navigation.tsx
+│    │
+│    ├── App.js
+│    ├── App.css
+│    ├── index.js
+│    └── index.css
+├── package.json
+└── yarn.lock
+```
+## Screenshot
+<p align="left">
+<a href="https://phenomenal-gelato-565c59.netlify.app"><img src="screen.gif" alt="screenshot" target=_blanked></a>
+</p>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Links
+<hr>
+<b>Check The Live Website ➡️</b> <a href="https://phenomenal-gelato-565c59.netlify.app"> Live Website </a> 
+<hr>
 
-### `yarn eject`
+### Built with
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- `@ReactJs`
+- `@TypeScript`
+- `@reduxjs/toolkit`
+- `react-redux`
+- `redux-Persist`
+- `axios`
+- `react-router-dom`
+- `@mui/material-ui`
+- `@emotion/react`
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Installation
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+1. Clone this project:
 
-## Learn More
+   ```bash
+     Clone the project: `https://github.com/ozkankomu/beta_case_study`
+   ```
+2. Install the necessary dependencies:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+   ```bash
+   npm install / yarn
+   ```
+## Usage
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. Start the application:
+
+   ```bash
+   npm run start / yarn start
+   ```
+2. Open your web browser and go to [http://localhost:3000/](http://localhost:3000)
+
+## Author
+
+- Author - [Ozkan Komu]
+
+<center> &#8987; Happy Coding  &#9997; </center>
