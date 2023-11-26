@@ -11,6 +11,8 @@ const Navigation = () => {
   const dispatch = useDispatch();
   const { sessionId } = useSelector(sessionIdSelector);
 
+  // I made the first requests in the navigation component to create the session ID and update the basket amount and updated the redux store. It would be better if this process was done after the login process under normal conditions. Since there is no login component, I thought it would be appropriate to do it here.
+
   const getSessionId = async () => {
     if (sessionId) return getCart();
     try {

@@ -18,8 +18,11 @@ import { cartSelector } from "../store/cart";
 import { useMemo } from "react";
 
 const Modal = ({ open, setOpen }: IPropsModal) => {
+  // Cart details are kept in the redux store under the name cartSlice.
   const { cartSlice } = useSelector(cartSelector);
 
+  
+// I defined the variable basket, which shows the quantity and prices of the products, with the useMemo hook so that it does not render continuously when the amount does not change.
   const cartQuantity = useMemo(() => {
     return cartSlice?.filter((item) => item.quantity > 0);
   }, [cartSlice]);

@@ -17,10 +17,12 @@ const Navbar = ({ setAllProducts }: IPropSearchBar) => {
   const [open, setOpen] = useState(false);
   const { cartSlice } = useSelector(cartSelector);
 
+  // I defined the variable that shows the amount of products with the useMemo hook so that it does not render continuously when the basket amount does not change.
   const cartQuantity = useMemo(() => {
     return cartSlice?.length ? cartSlice?.filter((item) => item?.quantity > 0) : [];
   }, [cartSlice]);
 
+  // The function I use to send a request to the search end point with a query.
   const getAllProductsWithQuery = async () => {
     try {
       const data = await betaService.searchProductsByName(query);
@@ -30,6 +32,7 @@ const Navbar = ({ setAllProducts }: IPropSearchBar) => {
     }
   };
 
+  // The control I put in the search input to make it search when enter is pressed.
   const handleKeyUp = (e: any) => {
     if (e.key === "Enter") {
       getAllProductsWithQuery();

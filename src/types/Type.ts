@@ -1,7 +1,6 @@
 export interface ISessionInitialStateType {
   sessionId: string;
 }
-
 export interface IProducts {
   id: string;
   name: string;
@@ -11,7 +10,6 @@ export interface IProducts {
   image: string;
   discount: string;
 }
-
 export interface IPropProductCardLİst {
     allProducts:IProducts[]  
 } 
@@ -21,7 +19,6 @@ export interface IPropProductCard {
 export interface IPropSearchBar {
   setAllProducts:React.Dispatch<React.SetStateAction<IProducts[]>>  
 } 
-
 export interface IProductionCardType {
   name:string;
   price:number;

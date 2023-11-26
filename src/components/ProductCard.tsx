@@ -24,11 +24,15 @@ const ProductCard = ({ product }: IPropProductCard) => {
   const dispatch = useDispatch();
   const [counter, setCounter] = useState(0);
   const { cartSlice } = useSelector(cartSelector);
+
   
+// I pull the product quantities added to the cart on the product cards from Redux and show the card with id control. I protect it from continuous rendering with useMemo.
   const productQuantity = useMemo(() => {
     return cartSlice?.filter((item) => item.productId === product.id);
   }, [cartSlice]);
 
+  
+// I can get data when pulling images from the API provided for the task, but I received a CORS error locally for the images. In case of any problems in the live project, I matched the images with the ids and kept them in my local.
   const image =
     product.id === "1"
       ? "./offer.jpg"
@@ -36,6 +40,7 @@ const ProductCard = ({ product }: IPropProductCard) => {
       ? "./lemon.jpg"
       : "./strawberry.jpg";
 
+      // I made requests to the API for increasing and decreasing transactions on product cards and kept the responses in the redux store.
   const handleIncrease = async () => {
     try {
       await betaService.addToCartById(Number(product.id));
@@ -47,6 +52,7 @@ const ProductCard = ({ product }: IPropProductCard) => {
     }
   };
 
+  // I made requests to the API for increasing and decreasing transactions on product cards and kept the responses in the redux store.
   const handleSubtraction = async () => {
     try {
       await betaService.subtractFromCartById(Number(product.id));
@@ -57,7 +63,7 @@ const ProductCard = ({ product }: IPropProductCard) => {
       console.log(error);
     }
   };
-
+  
   useEffect(() => {
     if (productQuantity.length > 0) {
       setCounter(productQuantity[0]?.quantity);

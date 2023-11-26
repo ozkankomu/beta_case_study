@@ -13,6 +13,8 @@ import {
   REGISTER,
 } from "redux-persist";
 
+// I used redux toolkit for state management. I also used redux-persist to cache states.
+
 const persistConfig = {
   key: "root",
   storage,
