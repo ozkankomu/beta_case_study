@@ -46,7 +46,6 @@ const ProductCard = ({ product }: IPropProductCard) => {
       await betaService.addToCartById(Number(product.id));
       const data = await betaService.getCart();
       dispatch(SET_CART_DATA(data));
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -57,7 +56,6 @@ const ProductCard = ({ product }: IPropProductCard) => {
     try {
       await betaService.subtractFromCartById(Number(product.id));
       const data = await betaService.getCart();
-      console.log(data);
       dispatch(SET_CART_DATA(data));
     } catch (error) {
       console.log(error);
@@ -65,7 +63,7 @@ const ProductCard = ({ product }: IPropProductCard) => {
   };
   
   useEffect(() => {
-    if (productQuantity.length > 0) {
+    if (productQuantity?.length > 0) {
       setCounter(productQuantity[0]?.quantity);
     }
   }, [productQuantity]);

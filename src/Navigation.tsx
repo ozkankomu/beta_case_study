@@ -29,7 +29,6 @@ const Navigation = () => {
       const cart = await betaService.getCart();
       cart === "Cart is empty." ? dispatch(SET_CART_DATA([])) :
        dispatch(SET_CART_DATA(cart));
-      console.log(cart)
     } catch (error) {
       console.log(error);
     }

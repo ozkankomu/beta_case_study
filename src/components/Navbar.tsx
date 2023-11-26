@@ -4,7 +4,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import { Badge, InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { ICart, IPropSearchBar } from "../types/Type";
+import { IPropSearchBar } from "../types/Type";
 import { betaService } from "../services/beta.service";
 import { useMemo, useState } from "react";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
