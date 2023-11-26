@@ -1,17 +1,22 @@
-import axios from "axios";
-import { getSessionId } from "../helpers/cacheSessionId";
+import axios, { InternalAxiosRequestConfig } from "axios";
+import store from "../store/store";
 
 export const BASE_URL =
 process.env.REACT_APP_BASE_API_URL || 'https://linkedin-cv-crawler.beta-limited.workers.dev/interview';
 
-const sessionId = getSessionId();
-
-export const betaApi = axios.create({
-    baseURL:BASE_URL,
-    headers:{
-      'Session-ID':sessionId
-    }
-  });
 export const betaApiWithoutSessionId = axios.create({
     baseURL:BASE_URL,   
   });
+
+export const betaApi = axios.create({
+    baseURL:BASE_URL,
+  });
+
+  const betaApiRequestInterceptor = async (
+    request: InternalAxiosRequestConfig,
+  ): Promise<InternalAxiosRequestConfig> => {
+    request.headers['Session-ID'] = store.getState().sessionId.sessionId;
+    return request;
+  };
+  
+  betaApi.interceptors.request.use(betaApiRequestInterceptor);

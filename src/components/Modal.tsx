@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import {
   Button,
   Dialog,
@@ -13,30 +12,17 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { betaService } from "../services/beta.service";
-import { IProductionCardType } from "../types/Type";
+import { IProductionCardType, IPropsModal } from "../types/Type";
+import { useSelector } from "react-redux";
+import { cartSelector } from "../store/cart";
+import { useMemo } from "react";
 
-interface IProps {
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
+const Modal = ({ open, setOpen }: IPropsModal) => {
+  const { cartSlice } = useSelector(cartSelector);
 
-const Modal = ({ open, setOpen }: IProps) => {
-  const [chart, setChart] = useState<IProductionCardType[]>([]);
-
-  const getChart = async () => {
-    try {
-      const data = await betaService.getCart();
-      if (data !== "Cart is empty.") return setChart(data);
-      
-    } catch (error) {
-      console.log(error)
-    }
-  };
-
-  useEffect(() => {
-    getChart();
-  }, []);
+  const cartQuantity = useMemo(() => {
+    return cartSlice?.filter((item) => item.quantity > 0);
+  }, [cartSlice]);
 
   return (
     <div>
@@ -54,29 +40,31 @@ const Modal = ({ open, setOpen }: IProps) => {
             <Table sx={{ minWidth: 550 }} aria-label="simple table">
               <TableHead>
                 <TableRow sx={{ backgroundColor: "#EFEFEF" }}>
-                  <TableCell>Name</TableCell>
-                  <TableCell align="right">Name</TableCell>
-                  <TableCell align="right">Price</TableCell>
-                  <TableCell align="right">Quantity</TableCell>
+                  <TableCell align="left">Name</TableCell>
+                  <TableCell align="left">Price</TableCell>
+                  <TableCell align="left">Quantity</TableCell>
+                  <TableCell align="left">Total Price</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {chart.length ? (
-                  chart?.map((row: IProductionCardType) => (
+                {cartQuantity?.length > 0 ? (
+                  cartSlice?.map((product: IProductionCardType) => (
                     <TableRow
-                      key={row?.name}
+                      key={product?.name}
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
-                      {row?.quantity === 0 ? (
+                      {product?.quantity === 0 ? (
                         ""
                       ) : (
                         <>
-                          <TableCell component="th" scope="row">
-                            {row?.name}
+                          <TableCell align="left">{product?.name}</TableCell>
+                          <TableCell align="left">${product?.price}</TableCell>
+                          <TableCell align="left">
+                            {product?.quantity}
                           </TableCell>
-                          <TableCell align="right">{row?.name}</TableCell>
-                          <TableCell align="right">{row?.price}</TableCell>
-                          <TableCell align="right">{row?.quantity}</TableCell>
+                          <TableCell align="left">
+                            ${product?.price * product.quantity}
+                          </TableCell>
                         </>
                       )}
                     </TableRow>

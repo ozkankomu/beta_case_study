@@ -28,3 +28,17 @@ export interface IProductionCardType {
   productId:string;
   quantity:number
 }
+
+export interface ICartInitialState {
+  cartSlice:ICart[]
+}
+export interface ICart {
+  productId: string
+  quantity: number
+  name: string
+  price: number
+}
+export interface IPropsModal {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}

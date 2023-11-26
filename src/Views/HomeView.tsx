@@ -17,10 +17,10 @@ const HomeView = () => {
   }, []);
 
   return (
-    <div>
+    <>
       <Navbar setAllProducts={setAllProducts} />
       <CardList allProducts={allProducts} />
-    </div>
+    </>
   );
 };
 

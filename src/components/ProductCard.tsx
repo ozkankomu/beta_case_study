@@ -13,21 +13,56 @@ import {
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import { IPropProductCard } from "../types/Type";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { betaService } from "../services/beta.service";
+import { useDispatch } from "react-redux";
+import { SET_CART_DATA, cartSelector } from "../store/cart";
+import { useSelector } from "react-redux";
+import { useMemo } from "react";
 
 const ProductCard = ({ product }: IPropProductCard) => {
+  const dispatch = useDispatch();
   const [counter, setCounter] = useState(0);
-  const image = product.id === '1' ? './offer.jpg' : product.id === '2' ? './lemon.jpg' : './strawberry.jpg'
+  const { cartSlice } = useSelector(cartSelector);
+  
+  const productQuantity = useMemo(() => {
+    return cartSlice?.filter((item) => item.productId === product.id);
+  }, [cartSlice]);
 
-  const handleIncrease = () => {
-    setCounter(counter + 1);
-  };
+  const image =
+    product.id === "1"
+      ? "./offer.jpg"
+      : product.id === "2"
+      ? "./lemon.jpg"
+      : "./strawberry.jpg";
 
-  const handleSubtraction = () => {
-    if (counter > 0) {
-      setCounter(counter - 1);
+  const handleIncrease = async () => {
+    try {
+      await betaService.addToCartById(Number(product.id));
+      const data = await betaService.getCart();
+      dispatch(SET_CART_DATA(data));
+      console.log(data);
+    } catch (error) {
+      console.log(error);
     }
   };
+
+  const handleSubtraction = async () => {
+    try {
+      await betaService.subtractFromCartById(Number(product.id));
+      const data = await betaService.getCart();
+      console.log(data);
+      dispatch(SET_CART_DATA(data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (productQuantity.length > 0) {
+      setCounter(productQuantity[0]?.quantity);
+    }
+  }, [productQuantity]);
 
   return (
     <Card sx={{ maxWidth: 400, position: "relative" }}>
@@ -83,6 +118,7 @@ const ProductCard = ({ product }: IPropProductCard) => {
           </Stack>
           <Button
             onClick={() => handleIncrease()}
+            color="error"
             disabled={counter > 0 ? true : false}
             sx={{ mt: "5px" }}
             variant="contained"

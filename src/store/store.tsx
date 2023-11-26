@@ -1,5 +1,6 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import sessionId from "./session";
+import cartSlice from './cart';
 import storage from "redux-persist/lib/storage";
 import {
   persistReducer,
@@ -15,11 +16,11 @@ import {
 const persistConfig = {
   key: "root",
   storage,
-  whitelist:['sessionId']
+  whitelist:['sessionId', 'cartSlice']
 };
 
 const reducers = combineReducers({
-  sessionId,
+  sessionId,cartSlice
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
@@ -40,4 +41,5 @@ export default store;
 
 export type IModule = {
   sessionId: ReturnType<typeof sessionId>;
+  cartSlice: ReturnType<typeof cartSlice>;
 };

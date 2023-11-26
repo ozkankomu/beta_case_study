@@ -4,15 +4,22 @@ import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import { Badge, InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { IPropSearchBar } from "../types/Type";
+import { ICart, IPropSearchBar } from "../types/Type";
 import { betaService } from "../services/beta.service";
-import { useState } from "react";
-import MailIcon from '@mui/icons-material/Mail';
-import Modal from './Modal'
+import { useMemo, useState } from "react";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import Modal from "./Modal";
+import { useSelector } from "react-redux";
+import { cartSelector } from "../store/cart";
 
 const Navbar = ({ setAllProducts }: IPropSearchBar) => {
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
+  const { cartSlice } = useSelector(cartSelector);
+
+  const cartQuantity = useMemo(() => {
+    return cartSlice?.length ? cartSlice?.filter((item) => item?.quantity > 0) : [];
+  }, [cartSlice]);
 
   const getAllProductsWithQuery = async () => {
     try {
@@ -52,11 +59,11 @@ const Navbar = ({ setAllProducts }: IPropSearchBar) => {
               <Box textAlign="center">
                 <img src="/logo.png" alt="" width={130} />
               </Box>
-              <Box sx={{ display: "flex" }}>
+              <Box sx={{ display: "flex", width: "40%", minWidth: 280 }}>
                 <TextField
                   size="small"
                   variant="outlined"
-                  placeholder="Searching for..."
+                  placeholder="Please Enter Name..."
                   onChange={(e) => setQuery(e.target.value)}
                   onKeyUp={(e) => handleKeyUp(e)}
                   fullWidth
@@ -93,11 +100,13 @@ const Navbar = ({ setAllProducts }: IPropSearchBar) => {
               </Box>
               <Box textAlign="center">
                 <Badge
-                  badgeContent={4}
+                  badgeContent={
+                    cartQuantity?.length ? cartQuantity?.length : "0"
+                  }
                   color="error"
                   onClick={() => setOpen(true)}
                 >
-                  <MailIcon color="warning" />
+                  <ShoppingCartIcon fontSize="large" color="warning" />
                 </Badge>
               </Box>
             </Box>
@@ -105,7 +114,6 @@ const Navbar = ({ setAllProducts }: IPropSearchBar) => {
         </AppBar>
       </Box>
       {open && <Modal open={open} setOpen={setOpen} />}
-         
     </>
   );
 };
